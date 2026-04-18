@@ -27,4 +27,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:${PORT}/health || exit 1
 
 # Comando com suporte a PORT dinâmica
-CMD exec gunicorn main:app --bind 0.0.0.0:${PORT} --workers 4 --timeout 120 --access-logfile - --error-logfile -
+CMD exec gunicorn main:app --bind 0.0.0.0:${PORT} --workers 1 --threads 2 --timeout 300 --access-logfile - --error-logfile -

@@ -22,11 +22,7 @@ import uuid
 app = Flask(__name__)
 
 # Configuração CORS - adicione seu domínio Vercel aqui
-CORS(app, origins=[
-    "http://localhost:3000",
-    "https://*.vercel.app",
-    "https://backend-alinbr1.up.railway.app"
-])
+CORS(app, origins="*")
 
 # Configuração de upload
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500MB

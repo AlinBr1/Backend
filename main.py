@@ -283,7 +283,7 @@ def upload_video(user_id):
         command = [
             "ffmpeg",
             "-i", input_path,
-            "-vf", "split[a][b];[a]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,gblur=sigma=15[bg];[b]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:color=black@0[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2",
+            "-filter_complex", "[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=20:5[bg];[0:v]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:color=black@0[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2",
             "-c:v", "libx264",
             "-preset", "ultrafast",
             "-crf", "28",

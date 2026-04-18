@@ -108,7 +108,7 @@ def upload_video():
         command = [
             "ffmpeg",
             "-i", input_path,
-            "-vf", "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2",
+            "-vf", "scale=1080:1920:force_original_aspect_ratio=decrease:flags=lanczos,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:color=black,setsar=1",
             "-c:v", "libx264",
             "-preset", "medium",
             "-crf", "23",
@@ -128,13 +128,16 @@ def upload_video():
         
         # Verificar se FFmpeg teve sucesso
         if result.returncode != 0:
+            print(f"FFmpeg ERRO (code {result.returncode}):")
+            print(f"STDERR: {result.stderr[-1000:]}")
+            print(f"STDOUT: {result.stdout[-500:]}")
             # Limpar arquivo de entrada
             if os.path.exists(input_path):
                 os.remove(input_path)
             
             return jsonify({
                 "error": "Falha na conversão do vídeo",
-                "details": result.stderr[:500]  # Primeiros 500 chars do erro
+                "details": result.stderr[-500:]
             }), 500
         
         # Verificar se arquivo de saída foi criado

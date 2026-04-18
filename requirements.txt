@@ -1,5 +1,6 @@
 flask
 flask-cors
+flask-limiter
 werkzeug
 gunicorn
 psycopg2-binary

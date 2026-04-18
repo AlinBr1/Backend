@@ -108,7 +108,7 @@ def upload_video():
         command = [
             "ffmpeg",
             "-i", input_path,
-            "-vf", "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:color=black",
+            "-vf", "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920",
             "-c:v", "libx264",
             "-preset", "ultrafast",
             "-crf", "28",
